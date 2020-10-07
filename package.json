@@ -1,0 +1,34 @@
+{
+  "name": "frenon-api-task",
+  "version": "1.0.0",
+  "description": "API que permite gestionar tareas utilizando mongoose, expressjs y MongoDbx.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mortegac/frenon-api-task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mortegac/frenon-api-task/issues"
+  },
+  "homepage": "https://github.com/mortegac/frenon-api-task#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.1.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.10.8",
+    "morgan": "^1.10.0",
+    "node-env-file": "^0.1.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
