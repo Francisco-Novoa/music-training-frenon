@@ -4,8 +4,9 @@ const morgan = require("morgan")
 const helmet = require("helmet")
 const methodOverride = require("method-override")
 const bodyParser = require("body-parser")
-
+const mongoose = require('mongoose');
 const app = express()
+
 
 app.use(cors({credentials: true}))
 
@@ -19,5 +20,6 @@ app.use(express.urlencoded({extended: true}))
 
 app.use(morgan("tiny"))
 
-app.listen("5000")
+
+app.listen(5000, () => { console.log('Server is running...') });
 
