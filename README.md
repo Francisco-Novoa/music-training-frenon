@@ -3,6 +3,13 @@
 
 API que permite gestionar tareas utilizando mongoose, expressjs y MongoDbx.
 
+**
+
+## NOTA:
+
+Las tareas deben pertenecer a un usuario.  Si al crearse no se asigna el usuario, se debe permitir realizar después la asignación
+
+**
 ![api-task](trabajo.png)
 
 ## RUTAS A CREAR
@@ -51,3 +58,20 @@ USER:  http://localhost:5000/api/user
 
 - Quieres profundizar un poco más usando docker para aplicaciones nodejs y Mongodb visita 
 (Dockerizando NodeJS y MongoDB)[https://medium.com/devschile/dockerizando-nodejs-y-mongodb-ad24fedab8f2]
+
+
+
+
+## create a new repository on the command line
+echo "# frenon-api-task" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/mortegac/frenon-api-task.git
+git push -u origin main
+                
+…or push an existing repository from the command line
+git remote add origin https://github.com/mortegac/frenon-api-task.git
+git branch -M main
+git push -u origin main
