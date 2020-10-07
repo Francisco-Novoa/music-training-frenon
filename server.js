@@ -1,25 +1,13 @@
 const express = require("express")
-const cors = require("cors")
-const morgan = require("morgan")
-const helmet = require("helmet")
-const methodOverride = require("method-override")
-const bodyParser = require("body-parser")
-const mongoose = require('mongoose');
-const app = express()
+const PORT = 5000;
+
+const { app } = require('./midlewares')
 
 
-app.use(cors({credentials: true}))
 
-app.use(helmet())
+app.get('/', (req, res)=>{
+    res.send(200,{message: 'Bienvenido a Api Task'})
+})
 
-app.use(bodyParser.json())
-
-app.use(express.json())
-
-app.use(express.urlencoded({extended: true}))
-
-app.use(morgan("tiny"))
-
-
-app.listen(5000, () => { console.log('Server is running...') });
+app.listen(PORT, () => { console.log(`Server is running... in port ${PORT}`) });
 
