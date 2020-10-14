@@ -12,6 +12,9 @@ env(__dirname + '/.env');
         };
         
         const url = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
+        
+        console.log('--URL--', url)
+        
         const connect = await mongoose.connect(url, options);
         
         console.log( connect ? 'Connected to Database Mongo Atlas':'');
