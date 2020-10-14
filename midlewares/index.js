@@ -1,3 +1,3 @@
 const unknownEndpoint = require("./unknownEndpoint")
-
-module.exports = {unknownEndpoint}
+const errorHandler = require("./errorHandler")
+module.exports = {unknownEndpoint, errorHandler}

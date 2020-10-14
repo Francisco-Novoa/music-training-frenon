@@ -3,7 +3,7 @@ const cors = require("cors")
 const morgan = require("morgan")
 const helmet = require("helmet")
 const methodOverride = require("method-override")
-const {unknownEndpoint} = require("./index")
+const {unknownEndpoint, errorHandler} = require("./index")
 const bodyParser = require("body-parser")
 const mongoose = require('mongoose');
 
@@ -18,4 +18,4 @@ app.use(morgan("tiny"));
 
 
 
-module.exports = { app, unknownEndpoint }
+module.exports = { app, unknownEndpoint, errorHandler }
