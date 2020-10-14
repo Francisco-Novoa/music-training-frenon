@@ -1,23 +1,15 @@
-const user = require('express').Router()
+const { usersController } = require("../controllers");
 
-user.get('/', (req, res) => {
-    res.send('GET request to the homepage')
-})
+const user = require("express").Router();
 
-user.get('/:id', (req, res) => {
-    res.send('GET request to the homepage')
-})
+user.get("/", usersController.getAll);
 
-user.post('/', (req, res) => {
-    res.send('POST request to the homepage')
-})
+user.get("/:id", usersController.getUser);
 
-user.put('/:id', (req, res) => {
-    res.send('PUT request to the homepage')
-})
+user.post("/", usersController.addUser);
 
-user.delete('/:id', (req, res) => {
-    res.send('DELETE request to the homepage')
-})
+user.put("/:id", usersController.updateUser);
 
-module.exports=user
+user.delete("/:id", usersController.deleteUser);
+
+module.exports = user;
