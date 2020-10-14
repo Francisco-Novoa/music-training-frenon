@@ -19,12 +19,9 @@
   },
   "homepage": "https://github.com/mortegac/frenon-api-task#readme",
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt": "^5.0.0",
-=======
     "@nodemailer/mailparser2": "^1.0.3",
     "@nodemailer/pro": "^1.0.0",
->>>>>>> b2858b59f1f60502d4ef51e4d879c47b33758633
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
