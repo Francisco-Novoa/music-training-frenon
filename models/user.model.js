@@ -14,11 +14,10 @@ const user = mongoose.Schema({
     unique: true,
     required: true,
   },
-  tasks: [
-    {
-      tarea: { type: mongoose.Schema.Types.ObjectId, ref: "Task" },
-    },
-  ],
+  role: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Role",
+  },
   createdAt: {
     type: Date,
     default: new Date(),
