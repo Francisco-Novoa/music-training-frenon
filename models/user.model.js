@@ -17,6 +17,7 @@ const user = mongoose.Schema({
   role: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Role",
+    default: "normal",
   },
   createdAt: {
     type: Date,
