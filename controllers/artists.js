@@ -1,20 +1,20 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/user.model");
+const Artist = require("../models/artist.model");
 
 /** GET */
 const getAll = async (request, response) => {
-  const users = await User.find({}).populate("tasks", {
+  const artists = await Artist.find({}).populate("album", {
     name: 1,
-    state: 1,
-    author: 1,
+    birthDate: 1,
+    country: 1,
     createdAt: 1,
     modifiedAt: 1,
   });
-  response.status(200).json(users);
+  response.status(200).json(artists);
 };
 
 /** POST */
-const addUser = async (request, response) => {
+const addArtist = async (request, response) => {
   try {
     const body = request.body;
     if (!body.password || body.password.length < 3) {
@@ -25,34 +25,35 @@ const addUser = async (request, response) => {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(body.password, saltRounds);
 
-    const users = new User({
-      username: body.username,
+    const artists = new Artist({
+      name: body.name,
       passwordHash,
-      email: body.email,
+      birthDate: body.birthDate,
+      country: body.country,
       createdAt: body.createdAt,
       modifiedAt: body.modifiedAt,
     });
 
-    const savedUser = await users.save();
+    const savedArtist = await artists.save();
 
-    response.json(savedUser);
+    response.json(savedArtist);
   } catch (error) {
     next(error);
   }
 };
 
 /** GET:ID */
-const getUser = async (request, response) => {
-  const user = await User.findById(request.params.id);
-  if (user) {
-    response.json(user);
+const getArtist = async (request, response) => {
+  const artist = await Artist.findById(request.params.id);
+  if (artist) {
+    response.json(artist);
   } else {
     response.status(404).end();
   }
 };
 
 /** PUT */
-const updateUser = async (request, response, next) => {
+const updateArtist = async (request, response, next) => {
   try {
     const body = request.body;
     if (!body.password || body.password.length < 3) {
@@ -64,28 +65,29 @@ const updateUser = async (request, response, next) => {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(body.password, saltRounds);
 
-    const user = {
-      username: body.username,
+    const artist = {
+      name: body.name,
       passwordHash,
-      email: body.email,
-      tasks: body.tasks,
+      birthDate: body.birthDate,
+      members: body.members,
+      albums: body.albums,
       modifiedAt: new Date(),
     };
-    const updatedUser = await User.findByIdAndUpdate(request.params.id, user, {
+    const updatedArtist = await Artist.findByIdAndUpdate(request.params.id, artist, {
       new: true,
     });
 
-    response.json(updatedUser);
+    response.json(updatedArtist);
   } catch (error) {
     next(error);
   }
 };
 
 /** DELETE */
-const deleteUser = async (request, response) => {
-  const user = await User.findById(request.params.id);
-  await user.deleteOne();
+const deleteArtist = async (request, response) => {
+  const artist = await Artist.findById(request.params.id);
+  await artist.deleteOne();
   return response.status(204).end();
 };
 
-module.exports = { getAll, getUser, addUser, updateUser, deleteUser };
+module.exports = { getAll, getArtist, addArtist, updateArtist, deleteArtist };
