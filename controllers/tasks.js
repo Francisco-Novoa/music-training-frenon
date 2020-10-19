@@ -1,5 +1,4 @@
-const bcrypt = require("bcrypt");
-const tasksRoute = require("express").Router();
+
 const Task = require("../models/task.model");
 
 /** GET */
@@ -23,8 +22,8 @@ const addTask = async (request, response) => {
             name: body.name,
             state: body.state,
             author: body.author,
-            createdAt: body.createdAt,
-            modifiedAt: body.modifiedAt,
+            createdAt: new Date(),
+            modifiedAt: new Date(),
         });
 
         const savedTask = await tasks.save();
