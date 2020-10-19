@@ -1,25 +1,15 @@
-const express = require('express')
+const { tasksController } = require("../controllers");
 
-const task = express.Router()
+const task = require("express").Router();
 
-task.get('/', (req, res) => {
-    res.send('GET request to the homepage')
-})
+task.get("/", tasksController.getAll);
 
-task.get('/:id', (req, res) => {
-    res.send('GET request to the homepage')
-})
+task.get("/:id", tasksController.getTask);
 
-task.post('/', (req, res) => {
-    res.send('POST request to the homepage')
-})
+task.post("/", tasksController.addTask);
 
-task.put('/:id', (req, res) => {
-    res.send('PUT request to the homepage')
-})
+task.put("/:id", tasksController.updateTask);
 
-task.delete('/:id', (req, res) => {
-    res.send('DELETE request to the homepage')
-})
+task.delete("/:id", tasksController.deleteTask);
 
-module.exports = task
+module.exports = task;
