@@ -22,8 +22,7 @@ const addTask = async (request, response) => {
             name: body.name,
             state: body.state,
             author: body.author,
-            createdAt: new Date(),
-            modifiedAt: new Date(),
+
         });
 
         const savedTask = await tasks.save();
