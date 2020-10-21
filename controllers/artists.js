@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+
 const Artist = require("../models/artist.model");
 
 /** GET */
@@ -17,17 +17,9 @@ const getAll = async (request, response) => {
 const addArtist = async (request, response) => {
   try {
     const body = request.body;
-    if (!body.password || body.password.length < 3) {
-      return response.status(400).json({
-        error: "The password must contain at least 3 characte",
-      });
-    }
-    const saltRounds = 10;
-    const passwordHash = await bcrypt.hash(body.password, saltRounds);
-
+  
     const artists = new Artist({
       name: body.name,
-      passwordHash,
       birthDate: body.birthDate,
       country: body.country,
       createdAt: body.createdAt,
@@ -56,14 +48,6 @@ const getArtist = async (request, response) => {
 const updateArtist = async (request, response, next) => {
   try {
     const body = request.body;
-    if (!body.password || body.password.length < 3) {
-      return response.status(400).json({
-        error: "The password must contain at least 3 characte",
-      });
-    }
-    console.log("asd");
-    const saltRounds = 10;
-    const passwordHash = await bcrypt.hash(body.password, saltRounds);
 
     const artist = {
       name: body.name,
