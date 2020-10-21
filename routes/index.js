@@ -1,9 +1,15 @@
 const express = require("express");
 const Router = express.Router();
-const task = require("./task");
-const user = require("./user");
+const album = require("./album");
+const member = require("./member");
+const artist = require("./artist");
 
-Router.use("/tasks", task);
-Router.use("/users", user);
+
+
+
+Router.use("/albums", album);
+Router.use("/members", member);
+Router.use("/artists", artist);
+
 
 module.exports = Router;
