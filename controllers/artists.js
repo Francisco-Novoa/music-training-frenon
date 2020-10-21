@@ -4,7 +4,7 @@ const Artist = require("../models/artist.model");
 /** GET */
 const getAll = async (request, response, next) => {
   try {
-    const artists = await Artist.find({}).populate("album", {
+    const artists = await Artist.find({}).populate("member", {
       name: 1,
       birthDate: 1,
       country: 1,
@@ -27,8 +27,6 @@ const addArtist = async (request, response, next) => {
       name: body.name,
       birthDate: body.birthDate,
       country: body.country,
-      createdAt: body.createdAt,
-      modifiedAt: body.modifiedAt,
     });
 
     const savedArtist = await artists.save();
