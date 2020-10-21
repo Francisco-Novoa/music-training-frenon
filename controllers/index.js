@@ -1,8 +1,10 @@
-const usersController = require("./users");
-const tasksController = require("./tasks");
+const albumsController = require("./albums");
+const artistsController = require("./artists");
+const membersController = require("./members");
+
 
 module.exports = {
-  usersController, tasksController
+  albumsController, artistsController, membersController
 };
 
 
