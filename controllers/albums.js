@@ -2,7 +2,7 @@ const Album = require("../models/album.model");
 
 /** GET */
 const getAll = async (request, response) => {
-  const albums = await Album.find({}).populate("albums", {
+  const albums = await Album.find({}).populate("artists", {
     name: 1,
     createdDate: 1,
     country: 1,
