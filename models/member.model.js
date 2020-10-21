@@ -10,7 +10,6 @@ const member = mongoose.Schema({
   },
   country: {
     type: String,
-    unique: true,
     required: true,
   },
   createdAt: {

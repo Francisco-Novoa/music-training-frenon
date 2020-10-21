@@ -10,7 +10,6 @@ const album = mongoose.Schema({
   },
   country: {
     type: String,
-    unique: true,
     required: true,
   },
   createdAt: {
