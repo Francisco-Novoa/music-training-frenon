@@ -32,10 +32,13 @@ const addMember = async (request, response, next) => {
 /** GET:ID */
 const getMember = async (request, response, next) => {
   const member = await Member.findById(request.params.id);
+  try{
   if (member) {
     response.json(member);
   } else {
     response.status(404).end();
+  }}catch(error){
+    next(error)
   }
 };
 

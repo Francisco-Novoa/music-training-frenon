@@ -40,10 +40,13 @@ const addArtist = async (request, response, next) => {
 /** GET:ID */
 const getArtist = async (request, response, next) => {
   const artist = await Artist.findById(request.params.id);
+  try{
   if (artist) {
     response.json(artist);
   } else {
     response.status(404).end();
+  }}catch(error){
+    next(error)
   }
 };
 

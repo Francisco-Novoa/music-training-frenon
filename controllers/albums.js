@@ -38,10 +38,13 @@ const addAlbum = async (request, response, next) => {
 /** GET:ID */
 const getAlbum = async (request, response, next) => {
   const album = await Album.findById(request.params.id);
+  try{
   if (album) {
     response.json(album);
   } else {
     response.status(404).end();
+  }}catch(error){
+    next(error)
   }
 };
 
