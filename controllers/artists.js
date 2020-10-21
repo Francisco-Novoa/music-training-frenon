@@ -2,22 +2,27 @@
 const Artist = require("../models/artist.model");
 
 /** GET */
-const getAll = async (request, response) => {
-  const artists = await Artist.find({}).populate("album", {
-    name: 1,
-    birthDate: 1,
-    country: 1,
-    createdAt: 1,
-    modifiedAt: 1,
-  });
-  response.status(200).json(artists);
+const getAll = async (request, response, next) => {
+  try {
+    const artists = await Artist.find({}).populate("album", {
+      name: 1,
+      birthDate: 1,
+      country: 1,
+      createdAt: 1,
+      modifiedAt: 1,
+    });
+    response.status(200).json(artists);
+  } catch (error) {
+    next(error)
+  }
+
 };
 
 /** POST */
-const addArtist = async (request, response) => {
+const addArtist = async (request, response, next) => {
+  const body = request.body;
+
   try {
-    const body = request.body;
-  
     const artists = new Artist({
       name: body.name,
       birthDate: body.birthDate,
@@ -35,7 +40,7 @@ const addArtist = async (request, response) => {
 };
 
 /** GET:ID */
-const getArtist = async (request, response) => {
+const getArtist = async (request, response, next) => {
   const artist = await Artist.findById(request.params.id);
   if (artist) {
     response.json(artist);
@@ -46,8 +51,8 @@ const getArtist = async (request, response) => {
 
 /** PUT */
 const updateArtist = async (request, response, next) => {
+  const body = request.body;
   try {
-    const body = request.body;
 
     const artist = {
       name: body.name,
@@ -68,10 +73,14 @@ const updateArtist = async (request, response, next) => {
 };
 
 /** DELETE */
-const deleteArtist = async (request, response) => {
+const deleteArtist = async (request, response,next) => {
   const artist = await Artist.findById(request.params.id);
-  await artist.deleteOne();
-  return response.status(204).end();
+  try {
+    await artist.deleteOne();
+    return response.status(204).end();
+  } catch (error) {
+    next(error)
+  }
 };
 
 module.exports = { getAll, getArtist, addArtist, updateArtist, deleteArtist };
