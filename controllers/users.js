@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
+const { SECRET } = require("../utils/config");
 
 /** GET */
 const getAll = async (request, response, next) => {
@@ -102,4 +103,34 @@ const deleteUser = async (request, response, next) => {
   }
 };
 
-module.exports = { getAll, getUser, addUser, updateUser, deleteUser };
+const login = async (request, response, next) => {
+  //checking if the password and username arrived
+  const { email, password } = request.body;
+  try {
+    if (!username || !password)
+      return response
+        .status(400)
+        .json({ error: "password or username missing" });
+    const user = await User.findOne({ email: email });
+    const match = await bcrypt.compare(password, user.passwordHash);
+    if (!match) return response.status(403).json({ error: "password invalid" });
+
+    const token = jwt.sign(
+      { username: user.username, id: user.id, role: user.role },
+      SECRET,
+      { expiresIn: "1h" }
+    );
+
+    response.status(200).send({
+      token,
+      username: username,
+      email: user.email,
+      id: user.id,
+      role: user.role,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAll, getUser, addUser, updateUser, deleteUser, login };
