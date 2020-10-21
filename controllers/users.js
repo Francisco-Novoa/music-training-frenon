@@ -2,39 +2,42 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
 /** GET */
-const getAll = async (request, response) => {
-  const users = await User.find({}).populate("tasks", {
-    name: 1,
-    state: 1,
-    author: 1,
-    createdAt: 1,
-    modifiedAt: 1,
-  });
-  response.status(200).json(users);
+const getAll = async (request, response, next) => {
+  try {
+    const users = await User.find({});
+    response.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
 };
 
 /** POST */
-const addUser = async (request, response) => {
+const addUser = async (request, response, next) => {
   try {
-    const body = request.body;
-    if (!body.password || body.password.length < 3) {
+    const { username, password, email } = request.body;
+    if (!password || password.length < 3) {
       return response.status(400).json({
-        error: "The password must contain at least 3 characte",
+        error: "The password must contain at least 3 characters",
+      });
+    }
+    if (!username || username.length < 6) {
+      return response.status(400).json({
+        error: "The username must contain at least 6 characters",
+      });
+    }
+    if (!/^(\w_?\.?[^@])+@(\w_?\.?[^@])+\.(\w[^@]{1,4})$/.test(email)) {
+      return response.status(400).json({
+        error: "email is invalid",
       });
     }
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(body.password, saltRounds);
-
     const users = new User({
-      username: body.username,
+      username,
       passwordHash,
-      email: body.email,
-      createdAt: body.createdAt,
-      modifiedAt: body.modifiedAt,
+      email,
     });
-
     const savedUser = await users.save();
-
     response.json(savedUser);
   } catch (error) {
     next(error);
@@ -42,39 +45,46 @@ const addUser = async (request, response) => {
 };
 
 /** GET:ID */
-const getUser = async (request, response) => {
-  const user = await User.findById(request.params.id);
-  if (user) {
-    response.json(user);
-  } else {
-    response.status(404).end();
+const getUser = async (request, response, next) => {
+  const { id } = request.params;
+  const user = await User.findById(id);
+  if (!user) {
+    return response.status(404).json({ error: "user not found" });
   }
+  response.json(user);
 };
 
 /** PUT */
 const updateUser = async (request, response, next) => {
+  const { id } = request.params;
+  const { username, email, password } = request.body;
   try {
-    const body = request.body;
-    if (!body.password || body.password.length < 3) {
+    if (!password || password.length < 3) {
       return response.status(400).json({
-        error: "The password must contain at least 3 characte",
+        error: "The password must contain at least 3 characters",
       });
     }
-    console.log("asd");
+    if (!username || username.length < 6) {
+      return response.status(400).json({
+        error: "The username must contain at least 6 characters",
+      });
+    }
+    if (!/^(\w_?\.?[^@])+@(\w_?\.?[^@])+\.(\w[^@]{1,4})$/.test(email)) {
+      return response.status(400).json({
+        error: "email is invalid",
+      });
+    }
     const saltRounds = 10;
-    const passwordHash = await bcrypt.hash(body.password, saltRounds);
-
+    const passwordHash = await bcrypt.hash(password, saltRounds);
     const user = {
-      username: body.username,
+      username,
       passwordHash,
-      email: body.email,
-      tasks: body.tasks,
+      email,
       modifiedAt: new Date(),
     };
-    const updatedUser = await User.findByIdAndUpdate(request.params.id, user, {
+    const updatedUser = await User.findByIdAndUpdate(id, user, {
       new: true,
     });
-
     response.json(updatedUser);
   } catch (error) {
     next(error);
@@ -82,10 +92,14 @@ const updateUser = async (request, response, next) => {
 };
 
 /** DELETE */
-const deleteUser = async (request, response) => {
-  const user = await User.findById(request.params.id);
-  await user.deleteOne();
-  return response.status(204).end();
+const deleteUser = async (request, response, next) => {
+  const { id } = request.params;
+  try {
+    await User.findByIdAndDelete(id);
+    return response.status(204).end();
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = { getAll, getUser, addUser, updateUser, deleteUser };
