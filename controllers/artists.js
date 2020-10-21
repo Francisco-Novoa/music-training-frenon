@@ -43,8 +43,7 @@ const getArtist = async (request, response, next) => {
   try{
   if (artist) {
     response.json(artist);
-  } else {
-    response.status(404).end();
+
   }}catch(error){
     next(error)
   }
@@ -57,7 +56,6 @@ const updateArtist = async (request, response, next) => {
 
     const artist = {
       name: body.name,
-      passwordHash,
       birthDate: body.birthDate,
       members: body.members,
       albums: body.albums,
