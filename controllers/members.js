@@ -3,13 +3,7 @@ const Member = require("../models/member.model");
 /** GET */
 const getAll = async (request, response, next) => {
   try {
-    const members = await Member.find({}).populate("member", {
-      name: 1,
-      birthDate: 1,
-      country: 1,
-      createdAt: 1,
-      modifiedAt: 1,
-    });
+    const members = await Member.find({})
     response.status(200).json(members);
   } catch (error) {
     next(error)
